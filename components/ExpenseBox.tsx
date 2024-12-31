@@ -1,19 +1,25 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Colors } from "../constants/Colors";
+import { useModal } from "@/store/modalStore";
+import { Expense } from "@/types/Expense";
+import { useEffect } from "react";
+import useExpenseStore from "@/store/expenseStore";
 
-export default function ExpenseBox({
-  title,
-  date,
-  amount,
-}: {
-  title: string;
-  date: string;
-  amount: number;
-}) {
+export default function ExpenseBox({ title, date, amount, id }: Expense) {
+  const { onOpen } = useModal();
+  const { setCurrentExpense, clearCurrentExpense } = useExpenseStore();
+
+  useEffect(() => {
+    return () => {
+      clearCurrentExpense();
+    };
+  }, [clearCurrentExpense]);
+
   return (
     <Pressable
       onPress={() => {
-        console.log("Expense Pressed");
+        setCurrentExpense({ title, date, amount, id });
+        onOpen();
       }}
       style={({ pressed }) => [styles.wrapper, pressed && { opacity: 0.5 }]}
       android_ripple={{ color: "#f2f2f2" }}
