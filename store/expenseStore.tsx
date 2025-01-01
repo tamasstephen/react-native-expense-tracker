@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Expense } from "@/types/Expense";
 
@@ -36,7 +37,8 @@ const useExpenseStore = create<ExpenseStore>()(
       clearCurrentExpense: () => set({ currentExpense: null }),
     }),
     {
-      name: "expense-store",
+      name: "expense",
+      storage: createJSONStorage(() => AsyncStorage),
     },
   ),
 );
