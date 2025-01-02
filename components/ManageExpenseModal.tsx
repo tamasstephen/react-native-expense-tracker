@@ -4,7 +4,6 @@ import {
   Modal,
   View,
   Text,
-  Button,
   StyleSheet,
   TextInput,
   SafeAreaView,
@@ -14,6 +13,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import DateTimePicker from "react-native-ui-datepicker";
 import dayjs from "dayjs";
+import CustomButton from "./CustomButton";
+import { Colors } from "@/constants/Colors";
 
 export default function ManageExpenseModal() {
   const { isOpen, onClose } = useModal();
@@ -37,6 +38,23 @@ export default function ManageExpenseModal() {
       removeExpense(currentExpense.id);
       closeModal();
     }
+  };
+
+  const clearForm = () => {
+    setTitle("");
+    setAmount(0);
+    setDate(dayjs());
+  };
+
+  const saveExpense = () => {
+    addExpense({
+      title,
+      amount,
+      date: dayjs(date).toString(),
+      id: currentExpense?.id || Date.now().toString(),
+    });
+    clearForm();
+    closeModal();
   };
 
   return (
@@ -79,6 +97,31 @@ export default function ManageExpenseModal() {
               onChange={(params) => setDate(dayjs(params.date))}
             />
           </View>
+          <View style={styles.buttonContainer}>
+            <CustomButton
+              onClick={saveExpense}
+              styles={{
+                backgroundColor: Colors.background,
+                flex: 1,
+              }}
+              isDisabled={!title || !amount}
+            >
+              <Text style={{ color: "white" }}>Save</Text>
+            </CustomButton>
+            <CustomButton
+              styles={{
+                backgroundColor: "transparent",
+                borderColor: Colors.secondary,
+                borderWidth: 1,
+                borderStyle: "solid",
+                flex: 1,
+              }}
+              onClick={closeModal}
+            >
+              <Text style={{ color: Colors.secondary }}>Cancel</Text>
+            </CustomButton>
+          </View>
+
           <IconButton
             onPress={deleteExpense}
             styles={{
@@ -91,19 +134,6 @@ export default function ManageExpenseModal() {
           >
             <Ionicons name="trash-outline" color="red" size={24} />
           </IconButton>
-          <Button
-            title="Save"
-            onPress={() =>
-              addExpense({
-                title,
-                amount,
-                date: dayjs(date).toString(),
-                id: currentExpense?.id || Date.now().toString(),
-              })
-            }
-            disabled={!title || !amount}
-          />
-          <Button title="Cancel" onPress={closeModal} />
         </View>
       </SafeAreaView>
     </Modal>
@@ -122,7 +152,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 16,
     alignItems: "stretch",
-    width: 200,
+    width: 250,
     marginBottom: 16,
   },
   input: {
@@ -131,5 +161,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 4,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    gap: 16,
+    width: 250,
+    marginBottom: 16,
   },
 });
