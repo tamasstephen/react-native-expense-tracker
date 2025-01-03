@@ -23,13 +23,13 @@ export default function TabLayout() {
           tabBarButton: HapticTab,
           tabBarBackground: TabBarBackground,
           headerStyle: {
-            backgroundColor: Colors.secondary,
+            backgroundColor: Colors.primary400,
           },
           headerTitleStyle: {
             color: "white",
           },
           sceneStyle: {
-            backgroundColor: Colors.background,
+            backgroundColor: Colors.primary500,
           },
           headerRight: () => (
             <View style={{ marginRight: 24 }}>

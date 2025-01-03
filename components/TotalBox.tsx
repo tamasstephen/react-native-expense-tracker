@@ -17,16 +17,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     padding: 12,
-    backgroundColor: Colors.boxLight,
+    backgroundColor: Colors.primary50,
     borderRadius: 8,
   },
   totalMoney: {
     fontWeight: "bold",
-    color: Colors.background,
+    color: Colors.primary800,
     fontSize: 16,
   },
   totalText: {
-    color: Colors.background,
+    color: Colors.primary800,
     fontSize: 16,
   },
 });

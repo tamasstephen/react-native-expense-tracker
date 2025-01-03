@@ -1,12 +1,12 @@
 import AppView from "@/components/AppView";
 import ExpenseList from "@/components/ExpenseList";
-import { dummyData } from "@/data/dummyData";
+import useExpenseStore from "@/store/expenseStore";
 
 export default function HomeScreen() {
-  const recentExpenses = dummyData.slice(0, 5);
+  const { expenses } = useExpenseStore();
   return (
     <AppView>
-      <ExpenseList expenses={recentExpenses} />
+      <ExpenseList expenses={expenses} />
     </AppView>
   );
 }

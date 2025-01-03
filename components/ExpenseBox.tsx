@@ -27,7 +27,7 @@ export default function ExpenseBox({ title, date, amount, id }: Expense) {
       <View style={styles.container}>
         <View style={styles.expenseData}>
           <Text style={styles.expenseText}>{title}</Text>
-          <Text style={styles.dateText}>{date}</Text>
+          <Text style={styles.dateText}>{date.format("MMM DD, YYYY")}</Text>
         </View>
         <View style={styles.amount}>
           <Text style={styles.amountText}>{amount.toFixed(2)}</Text>
@@ -39,7 +39,7 @@ export default function ExpenseBox({ title, date, amount, id }: Expense) {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary800,
     borderRadius: 8,
   },
   container: {

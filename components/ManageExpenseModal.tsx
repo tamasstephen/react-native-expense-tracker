@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import IconButton from "./IconButton";
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DateTimePicker from "react-native-ui-datepicker";
 import dayjs from "dayjs";
 import CustomButton from "./CustomButton";
@@ -18,15 +18,16 @@ import { Colors } from "@/constants/Colors";
 
 export default function ManageExpenseModal() {
   const { isOpen, onClose } = useModal();
-  const { clearCurrentExpense, currentExpense, removeExpense, addExpense } =
-    useExpenseStore();
+  const {
+    clearCurrentExpense,
+    currentExpense,
+    removeExpense,
+    addExpense,
+    updateExpense,
+  } = useExpenseStore();
   const [date, setDate] = useState(dayjs(currentExpense?.date) || dayjs());
   const [amount, setAmount] = useState(currentExpense?.amount || 0);
   const [title, setTitle] = useState(currentExpense?.title || "");
-
-  useEffect(() => {
-    console.log("date: ", date);
-  }, [date]);
 
   const closeModal = () => {
     clearCurrentExpense();
@@ -47,11 +48,17 @@ export default function ManageExpenseModal() {
   };
 
   const saveExpense = () => {
+    if (currentExpense) {
+      updateExpense(currentExpense.id, { title, amount, date });
+      clearForm();
+      closeModal();
+      return;
+    }
     addExpense({
       title,
       amount,
-      date: dayjs(date).toString(),
-      id: currentExpense?.id || Date.now().toString(),
+      date,
+      id: Date.now().toString(),
     });
     clearForm();
     closeModal();
