@@ -4,6 +4,7 @@ import { useModal } from "@/store/modalStore";
 import { Expense } from "@/types/Expense";
 import { useEffect } from "react";
 import useExpenseStore from "@/store/expenseStore";
+import dayjs from "dayjs";
 
 export default function ExpenseBox({ title, date, amount, id }: Expense) {
   const { onOpen } = useModal();
@@ -27,7 +28,9 @@ export default function ExpenseBox({ title, date, amount, id }: Expense) {
       <View style={styles.container}>
         <View style={styles.expenseData}>
           <Text style={styles.expenseText}>{title}</Text>
-          <Text style={styles.dateText}>{date.format("MMM DD, YYYY")}</Text>
+          <Text style={styles.dateText}>
+            {dayjs(date).format("MMM DD, YYYY")}
+          </Text>
         </View>
         <View style={styles.amount}>
           <Text style={styles.amountText}>{amount.toFixed(2)}</Text>
